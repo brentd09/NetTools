@@ -35,6 +35,5 @@ function Get-NetStat {
       write-debug "$matches"
       new-object -TypeName NetstatUDP -Property $matches | Select-Object Protocol,SrcIP,SrcPort,DestIP,DestPort,State,PID
     }
-
   }
 }
