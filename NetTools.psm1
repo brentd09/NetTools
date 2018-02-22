@@ -48,7 +48,6 @@ function Get-NetStat {
     [int]$PID
     [string]$0
   }
-  if ($TC-and $UDP -eq $false) {$TCP = $true; $UDP = $true}
   $RegexStr = "^(?<Protocol>TCP|UDP),(?<SrcIP>(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[.*\])):(?<SrcPort>\d+),(?<DestIP>(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[.*\]|\*)):(?<DestPort>\d+|\*),(?<State>[a-zA-Z_]+),(?<PID>\d+)$"
   $RawNS = netstat -ano 
   $CleanNS = ($RawNS.trim() | Select-String -Pattern "^(TCP|UDP)") -replace "\s+",',' -replace "(?=(^UDP))(^udp.+),(\d+)",'$2,NO_STATE,$3'
