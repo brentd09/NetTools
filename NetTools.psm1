@@ -5,6 +5,7 @@ function Get-NetStat {
 .DESCRIPTION
    This script get the raw output from a netstat -ano command and reformats the 
    data into two powershell custom objects (NetstatTCP and NetstatUDP objects)
+   (A better option to this script would be the Get-NetTCPConnection cmdlet)
 .EXAMPLE
    Get-Netstat
    This gets all output from the netstat -ano and converts the data into PowerShell objects
