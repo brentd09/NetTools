@@ -45,15 +45,15 @@
 
   $ObjProps = [ordered]@{
     IPAddress        = $IPAddress
-    OctetSubnet      = $SubnetOctetIndex + 1
     CIDRSubnetMask   = $SubnetLength
     SubnetMask       = $TraditionalSubnetMask
     IPSubnet         = $SubnetAddressOctetArray -join '.'
     Broadcast        = $BroadCastAddressArray -join '.'
     AllHostAddresses = $AllValidHostAddressesInSubnet
+    NumberOfHosts    = $AllValidHostAddressesInSubnet.Count
   }
   New-Object -TypeName psobject -Property $ObjProps
 }
 
 
-Show-SubnetInformation -SubnetLength 30 -IPAddress 50.45.52.222
+Show-SubnetInformation -SubnetLength 28 -IPAddress 50.45.52.222
