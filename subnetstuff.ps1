@@ -6,7 +6,7 @@
     [Parameter(Mandatory=$true)]
     [string]$IPAddress
   )
-
+ 
   [int[]]$OctetArrayFromIPAddress = $IPAddress -split '\.'
   
   $OctetSubnetBitIndex = $SubnetLength % 8
