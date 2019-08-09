@@ -12,9 +12,16 @@
 [CmdletBinding()]
 Param()
 Get-Process | Where-Object {$_.ProcessName -in @('chrome','firefox','iexplore')} | Stop-Process -Force
+$Counter = 0
 do {
+  Start-Sleep -Seconds 1
+  $Counter++
   $BrowserProcs = Get-Process | Where-Object {$_.ProcessName -in @('chrome','firefox','iexplore')}
-} until ($BrowserProcs.Count -eq 0)
+} until ($BrowserProcs.Count -eq 0 -or $Counter -eq 20)
+if ($BrowserProcs.Count -ne 0) {
+  Write-Warning 'The browsers did not terminate, please close them manually'
+  break
+}
 
 #Wipe Chrome User Data
 $ChromePath = $env:LOCALAPPDATA + "\Google\Chrome\User Data\*"
