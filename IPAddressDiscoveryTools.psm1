@@ -2,10 +2,16 @@ function Get-CurrentSubnetIPInfo {
   [CmdletBinding()]
   Param()
   try {
-    $NetAdatpter = Get-NetAdapter -Physical -ErrorAction Stop
-    $IPInfo = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $NetAdatpter.ifIndex -ErrorAction Stop
+    $PhysicalAdatpter = Get-NetAdapter -Physical -ErrorAction Stop
+    $IPInfo = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $PhysicalAdatpter.ifIndex -ErrorAction Stop
   }
-  Catch {Write-Warning 'Could not identify a network card or IP address'; break}
+  Catch {
+    try {
+      $HyperVAdatpter = Get-NetAdapter | Where-Object {$_.MacAddress -eq $PhysicalAdatpter.MacAddress -and $_ -ne $PhysicalAdatpter} -ErrorAction Stop
+      $IPInfo = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $HyperVAdatpter.ifIndex -ErrorAction Stop
+    }
+    catch {Write-Warning 'No Adapter could be found for this computer'}
+  }
   $SubnetJump = [math]::Pow(2,(8 - ($IPInfo.PrefixLength % 8)))
   $RevOctets = ($IPInfo.IPAddress -split '\.')[3..0]
   [ipaddress]$RevIPAddress = $RevOctets -join '.' 
