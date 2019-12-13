@@ -151,7 +151,8 @@ function Copy-DDLSFileToStudentPC {
   .PARAMETER FilePath
     Points to the file that will be copied to the Student PCs 
   .PARAMETER Destination
-    Points to the directory on the student PC where the file wil be copied to
+    Points to the directory on the student PC where the file wil be copied to, if this is omitted  then
+    the default detination will be the student's desktop 
   .NOTES
     General notes
       Created by: Brent Denny
