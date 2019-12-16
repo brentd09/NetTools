@@ -81,6 +81,9 @@ function New-DDLSStudentPSSessions {
     Running this script calls upon another cmdlet that will discover the IPs in the classroom, the output 
     of this called cmdlet shows first and last IP in the subnet, Subnet mask, all valid IPs and all IPs 
     excluding the current IP of the computer where this script is running.
+    Using the following syntax you can store the PSSession information in the variable $StudentSessions
+    which then can be used with the other commands in this module.
+    $StudentSessions = New-DDLSStudentPSSessions        
   .NOTES
     General notes
       Created by: Brent Denny
@@ -108,13 +111,18 @@ function Restart-DDLSStudentPC {
     will assist us in selecting f12 when it boots to lay down a new image for the next class
   .EXAMPLE
     Restart-DDLSStudentPC -StudentSessions $ClassSessions  -SecondsBetweenReboots 25
-    This will send restart commands each 25 seconds to each of the sessions given to the parameter StudentSessions
+    This will send restart commands each 25 seconds to each of the sessions given to the parameter StudentSessions.
+    To create the $StudentSessions variable run the following command before running this command:
+    $StudentSessions = New-DDLSStudentPSSessions
   .EXAMPLE
     Restart-DDLSStudentPC 
     This will first establish PS sessions to the student PCs and then send restart commands each 20 seconds to each 
     of the sessions, 20 Seconds is the default    
   .PARAMETER StudentSessions
-    This accepts PSSession objects and normally is all of the sessions to every studentPC
+    This accepts PSSession objects that were created to every student PC. If this parameter is omitted the 
+    command will create its own sessions, but this can take 20 - 30 seconds to complete. 
+    To create the $StudentSessions variable run the following command before running this command:
+    $StudentSessions = New-DDLSStudentPSSessions    
   .PARAMETER SecondsBetweenReboots
     Enter an integer value for the number of seconds to wait before the next reboot
   .NOTES
@@ -147,7 +155,10 @@ function Copy-DDLSFileToStudentPC {
     This will copy a file from the local PCs D:\ drive, called file.pdf, to each student computer's C:\ 
     drive. 
   .PARAMETER StudentSessions
-    This accepts PSSession objects and normally is all of the sessions to every studentPC
+    This accepts PSSession objects that were created to every student PC. If this parameter is omitted the 
+    command will create its own sessions, but this can take 20 - 30 seconds to complete. 
+    To create the $StudentSessions variable run the following command before running this command:
+    $StudentSessions = New-DDLSStudentPSSessions    
   .PARAMETER FilePath
     Points to the file that will be copied to the Student PCs 
   .PARAMETER Destination
@@ -187,7 +198,10 @@ function Set-DDLSPowerOptions {
     Set-DDLSPowerOptions -StudentSessions $ClassSessions
     This runs the PowerCFG commands on every student PC that it has a PS session to
   .PARAMETER StudentSessions
-    This accepts PSSession objects and normally is all of the sessions to every studentPC
+    This accepts PSSession objects that were created to every student PC. If this parameter is omitted the 
+    command will create its own sessions, but this can take 20 - 30 seconds to complete.     
+    To create the $StudentSessions variable run the following command before running this command:
+    $StudentSessions = New-DDLSStudentPSSessions    
   .NOTES
     General notes
       Created by: Brent Denny
@@ -219,7 +233,10 @@ function Disable-DDLSLanguageHotKey {
     Disable-DDLSLanguageHotKey -StudentSessions $ClassSessions
     This edits the registry on every student PC that it has a PS session to
   .PARAMETER StudentSessions
-    This accepts PSSession objects and normally is all of the sessions to every studentPC
+    This accepts PSSession objects that were created to every student PC. If this parameter is omitted the 
+    command will create its own sessions, but this can take 20 - 30 seconds to complete. 
+    To create the $StudentSessions variable run the following command before running this command:
+    $StudentSessions = New-DDLSStudentPSSessions    
   .NOTES
     General notes
       Created by: Brent Denny
@@ -251,7 +268,10 @@ function Enable-DDLSAutoLogon {
     Enable-DDLSAutoLogon -StudentSessions $ClassSessions
     This edits the registry on every student PC that it has a PS session to
   .PARAMETER StudentSessions
-    This accepts PSSession objects and normally is all of the sessions to every studentPC
+    This accepts PSSession objects that were created to every student PC. If this parameter is omitted the 
+    command will create its own sessions, but this can take 20 - 30 seconds to complete. 
+    To create the $StudentSessions variable run the following command before running this command:
+    $StudentSessions = New-DDLSStudentPSSessions    
   .NOTES
     General notes
       Created by: Brent Denny
